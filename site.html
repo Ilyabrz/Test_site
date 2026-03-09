@@ -1,11 +1,381 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Анна Смирнова | Тургид в Санкт-Петербурге</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e6e9f0 0%, #d4d9e5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .business-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 42px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 
+                        0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* заголовок */
+        .guide-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .guide-header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #1a2639;
+            line-height: 1.1;
+        }
+
+        .guide-header .subtitle {
+            font-size: 1.3rem;
+            color: #3b4b6a;
+            background: rgba(255, 255, 255, 0.6);
+            display: inline-block;
+            padding: 0.4rem 1.6rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            margin-top: 8px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* сетка фото+видео */
+        .media-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .photo-frame {
+            background: #f8fafd;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -12px rgba(0, 20, 40, 0.25);
+            border: 2px solid white;
+            aspect-ratio: 4/5;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-frame:hover img {
+            transform: scale(1.02);
+        }
+
+        .video-frame {
+            background: #1a2639;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.4);
+            border: 2px solid white;
+            aspect-ratio: 16/9;
+        }
+
+        .video-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* блок информации */
+        .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .bio {
+            flex: 2;
+            min-width: 280px;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            border-radius: 28px;
+            padding: 28px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .bio h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #0b1b33;
+            margin-bottom: 18px;
+            border-left: 8px solid #4f7aa6;
+            padding-left: 20px;
+        }
+
+        .bio p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #1f2c40;
+            margin-bottom: 20px;
+        }
+
+        .highlights {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px 28px;
+            margin: 24px 0 16px;
+        }
+
+        .highlights li {
+            font-size: 1.1rem;
+            background: white;
+            padding: 8px 22px;
+            border-radius: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+            border: 1px solid #dbe1ec;
+            color: #1f2c40;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlights li span {
+            font-size: 1.3rem;
+        }
+
+        .contacts {
+            flex: 1;
+            min-width: 240px;
+            background: white;
+            border-radius: 28px;
+            padding: 28px 24px;
+            box-shadow: 0 15px 25px -12px rgba(34, 47, 70, 0.2);
+            border: 1px solid rgba(128, 154, 186, 0.3);
+        }
+
+        .contacts h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #13273e;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+            font-size: 1.15rem;
+            color: #1f3a57;
+            background: #f2f5fa;
+            padding: 10px 18px;
+            border-radius: 60px;
+            transition: 0.15s;
+        }
+
+        .contact-item:hover {
+            background: #e3e9f3;
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .contact-detail {
+            word-break: break-word;
+        }
+
+        .cta-button {
+            display: block;
+            background: #1e3b5c;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.3rem;
+            padding: 18px 15px;
+            border-radius: 60px;
+            margin-top: 28px;
+            box-shadow: 0 10px 18px -8px #1e3b5c80;
+            transition: all 0.15s;
+            border: 1px solid #ffffff50;
+        }
+
+        .cta-button:hover {
+            background: #143048;
+            box-shadow: 0 15px 25px -6px #0f253a;
+            transform: scale(1.02);
+        }
+
+        /* социальные ссылки */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-top: 35px;
+            font-size: 1.5rem;
+        }
+
+        .social-links a {
+            color: #1f3a57;
+            background: white;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #cdd9eb;
+            transition: 0.15s;
+            font-weight: 600;
+        }
+
+        .social-links a:hover {
+            background: #1e3b5c;
+            color: white;
+            border-color: #1e3b5c;
+            transform: translateY(-4px);
+        }
+
+        /* адаптивность */
+        @media (max-width: 750px) {
+            .business-card {
+                padding: 22px;
+            }
+            .media-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .guide-header h1 {
+                font-size: 2.2rem;
+            }
+            .info-section {
+                flex-direction: column;
+            }
+            .bio h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 450px) {
+            .highlights {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .contact-item {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="business-card">
+        <!-- Имя и специализация -->
+        <div class="guide-header">
+            <h1>Анна Смирнова</h1>
+            <div class="subtitle">🗺️ Гид по Санкт-Петербургу</div>
+        </div>
+
+        <!-- Фото и видео -->
+        <div class="media-grid">
+            <div class="photo-frame">
+                <!-- реальное фото гида (случайная женщина с randomuser) -->
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" 
+                     alt="Анна Смирнова, гид в Петербурге"
+                     loading="lazy">
+            </div>
+            <div class="video-frame">
+                <!-- Промо-видео о Санкт-Петербурге (YouTube) -->
+                <iframe src="https://www.youtube.com/embed/1La4QzGeaaQ?si=2un27_nQTRM2wV9V" 
+                        title="Прогулка по Санкт-Петербургу"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <!-- Блок с информацией и контактами -->
+        <div class="info-section">
+            <!-- О гиде -->
+            <div class="bio">
+                <h2>✨ Ваш проводник</h2>
+                <p>Привет! Я Анна — коренная петербурженка, историк и лицензированный гид с 10-летним стажем. Влюблена в город на Неве и знаю все его тайные дворики, парадные и легенды.</p>
+                <ul class="highlights">
+                    <li><span>🗓️</span> 10 лет опыта</li>
+                    <li><span>🎭</span> Искусствовед</li>
+                    <li><span>🌍</span> Русский, English</li>
+                    <li><span>👥</span> Индивидуально / группы</li>
+                </ul>
+                <p>Со мной вы увидите не только Эрмитаж и Петергоф, но и настоящий, живой Петербург с его атмосферой, вкусной историей и нетуристическими маршрутами.</p>
+            </div>
+
+            <!-- Контактная информация -->
+            <div class="contacts">
+                <h3>📞 Связаться</h3>
+
+                <div class="contact-item">
+                    <span class="contact-icon">📱</span>
+                    <span class="contact-detail">+7 (911) 234-56-78</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <span class="contact-detail">anna.spb@guide.me</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📌</span>
+                    <span class="contact-detail">Санкт-Петербург, центр</span>
+                </div>
+
+                <!-- Кнопка-действие (заказ экскурсии) -->
+                <a href="#" class="cta-button">📅 Заказать экскурсию</a>
+
+                <!-- Социальные сети (эмодзи как иконки) -->
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="Telegram">✈️</a>
+                    <a href="#" aria-label="WhatsApp">💬</a>
+                    <a href="#" aria-label="Vkontakte">📘</a>
+                </div>
+                <p style="text-align: center; margin-top: 15px; color: #435f7d; font-size: 0.9rem;">@anna_guide_spb</p>
+            </div>
+        </div>
+
+        <!-- маленькая дополнительная информация (режим работы) -->
+        <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 0.95rem; color: #3f5270; border-top: 2px dashed rgba(79, 122, 166, 0.3); padding-top: 20px; flex-wrap: wrap;">
+            <span>🕒 Гибкий график: ежедневно 10:00–20:00</span>
+            <span>⭐ Принимаю рубли, евро, карты</span>
+            <span>🚶 До 8 человек в группе</span>
+        </div>
+    </div>
 </body>
 </html>
