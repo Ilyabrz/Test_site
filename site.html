@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Попов Сеогей Дмитриевич | Тургид в Санкт-Петербурге</title>
+    <title>Пётр | Гид и проводник</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            background: linear-gradient(145deg, #e6e9f0 0%, #d4d9e5 100%);
+            background: linear-gradient(145deg, #1f2b3a, #141e2c);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -21,361 +21,522 @@
             padding: 20px;
         }
 
-        .business-card {
-            max-width: 1100px;
+        .card {
+            max-width: 700px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 42px;
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 
-                        0 2px 8px rgba(0, 0, 0, 0.08);
-            padding: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        /* заголовок */
-        .guide-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .guide-header h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: #1a2639;
-            line-height: 1.1;
-        }
-
-        .guide-header .subtitle {
-            font-size: 1.3rem;
-            color: #3b4b6a;
-            background: rgba(255, 255, 255, 0.6);
-            display: inline-block;
-            padding: 0.4rem 1.6rem;
-            border-radius: 40px;
-            backdrop-filter: blur(4px);
-            margin-top: 8px;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-
-        /* сетка фото+видео */
-        .media-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 28px;
-            margin-bottom: 40px;
-        }
-
-        .photo-frame {
-            background: #f8fafd;
-            border-radius: 32px;
+            background: #f4f7fc;
+            border-radius: 48px 48px 30px 30px;
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(255, 255, 255, 0.1) inset;
             overflow: hidden;
-            box-shadow: 0 15px 30px -12px rgba(0, 20, 40, 0.25);
-            border: 2px solid white;
-            aspect-ratio: 4/5;
         }
 
-        .photo-frame img {
+        .photo {
+            width: 100%;
+            aspect-ratio: 1.3 / 1;
+            overflow: hidden;
+        }
+
+        .photo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center 25%;
             display: block;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
 
-        .photo-frame:hover img {
+        .photo:hover img {
             transform: scale(1.02);
         }
 
-        .video-frame {
-            background: #1a2639;
-            border-radius: 32px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.4);
-            border: 2px solid white;
-            aspect-ratio: 16/9;
+        .info {
+            padding: 30px 30px 20px 30px;
         }
 
-        .video-frame iframe {
+        .name {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #0f1a2f;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.25rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #bfd7f5;
+            color: #102331;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            margin-bottom: 28px;
+            border: 1px solid white;
+        }
+
+        /* Сетка из четырёх блоков */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+            margin-bottom: 32px;
+        }
+
+        .feature-item {
+            background: white;
+            border-radius: 28px;
+            padding: 20px 18px;
+            box-shadow: 0 8px 16px -8px rgba(0, 20, 30, 0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #eef4ff;
+            cursor: pointer;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 25px -12px #1f3a5f40;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            user-select: none; /* чтобы текст не выделялся при клике */
+        }
+
+        .feature-text {
+            color: #1f2f44;
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+
+        /* Раскрывающийся дополнительный текст */
+        .feature-expand {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            color: #2a405c;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            border-top: 1px solid transparent;
+            transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.2s, border-color 0.2s;
+            margin-top: 8px;
+        }
+
+        .feature-item.expanded .feature-expand {
+            max-height: 250px; /* достаточно для контента */
+            opacity: 1;
+            padding-top: 12px;
+            border-top-color: #cbd6e6;
+        }
+
+        /* Блок видео-аккордеона */
+        .video-section {
+            margin: 20px 0 100px; /* увеличен нижний отступ, чтобы контакты не перекрывали заголовок */
+            background: #e3ecf7;
+            border-radius: 30px;
+            padding: 20px;
+        }
+
+        .video-section h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f293f;
+            margin-bottom: 18px;
+            padding-left: 10px;
+            border-left: 6px solid #3a6d8c;
+        }
+
+        .accordion-item {
+            background: white;
+            border-radius: 24px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 18px 22px;
+            background: white;
+            border: none;
+            text-align: left;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #102331;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.15s;
+            border-bottom: 1px solid transparent;
+        }
+
+        .accordion-header:hover {
+            background: #f0f6ff;
+        }
+
+        .accordion-header.active {
+            background: #d7e6ff;
+            border-bottom-color: #a0bddd;
+        }
+
+        .accordion-header .arrow {
+            font-size: 1.8rem;
+            transition: transform 0.3s;
+        }
+
+        .accordion-header.active .arrow {
+            transform: rotate(90deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            padding: 0 22px;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.2s;
+            background: #f9fcff;
+        }
+
+        .accordion-content.show {
+            max-height: 400px;
+            padding: 22px;
+        }
+        .contact-popup.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+}
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 0;
         }
 
-        /* блок информации */
-        .info-section {
+        /* Футер со всплывающими контактами */
+        .footer {
+            position: relative;
+            background: #d6e2f0;
+            padding: 0px 30px;
+            height: 70px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-top: 20px;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            transition: background 0.2s;
+            border-top: 2px dashed rgba(255, 255, 255, 0.7);
         }
 
-        .bio {
-            flex: 2;
-            min-width: 280px;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            border-radius: 28px;
-            padding: 28px 30px;
-            border: 1px solid rgba(255, 255, 255, 0.7);
+        .footer-hint {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f293f;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .bio h2 {
+        .footer-hint .arrow {
             font-size: 2rem;
-            font-weight: 600;
-            color: #1a3e75;
-            margin-bottom: 18px;
-            border-left: 8px solid #4f7aa6;
-            padding-left: 20px;
+            transition: transform 0.2s;
         }
 
-        .bio p {
-            font-size: 1.15rem;
-            line-height: 1.6;
-            color: #1f2c40;
-            margin-bottom: 20px;
+        .footer:hover .footer-hint .arrow {
+            transform: translateY(5px);
         }
 
-        .highlights {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px 28px;
-            margin: 24px 0 16px;
-        }
-
-        .highlights li {
-            font-size: 1.1rem;
+        .contact-popup {
+            position: absolute;
+            bottom: 100%;
+            left: 20px;
+            right: 20px;
             background: white;
-            padding: 8px 22px;
-            border-radius: 40px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
-            border: 1px solid #dbe1ec;
-            color: #1f2c40;
-            font-weight: 500;
+            border-radius: 32px 32px 20px 20px;
+            padding: 25px 25px 20px 25px;
+            box-shadow: 0 -10px 30px -10px #10212e;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.25s, visibility 0.25s, transform 0.3s ease;
+            border: 2px solid white;
+            z-index: 10;
+        }
+
+        .footer:hover .contact-popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .contact-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 16px;
+            font-size: 1.2rem;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2eaf5;
         }
 
-        .highlights li span {
-            font-size: 1.3rem;
-        }
-
-        .contacts {
-            flex: 1;
-            min-width: 240px;
-            background: white;
-            border-radius: 28px;
-            padding: 28px 24px;
-            box-shadow: 0 15px 25px -12px rgba(34, 47, 70, 0.2);
-            border: 1px solid rgba(128, 154, 186, 0.3);
-        }
-
-        .contacts h3 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #13273e;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 22px;
-            font-size: 1.15rem;
-            color: #1f3a57;
-            background: #f2f5fa;
-            padding: 10px 18px;
-            border-radius: 60px;
-            transition: 0.15s;
-        }
-
-        .contact-item:hover {
-            background: #e3e9f3;
-            transform: translateY(-2px);
+        .contact-row:last-child {
+            border-bottom: none;
         }
 
         .contact-icon {
-            font-size: 1.8rem;
-            line-height: 1;
+            font-size: 2rem;
+            min-width: 40px;
+            text-align: center;
         }
 
         .contact-detail {
+            color: #1b3147;
+            font-weight: 500;
             word-break: break-word;
         }
 
-        .cta-button {
-            display: block;
-            background: #1e3b5c;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.3rem;
-            padding: 18px 15px;
-            border-radius: 60px;
-            margin-top: 28px;
-            box-shadow: 0 10px 18px -8px #1e3b5c80;
-            transition: all 0.15s;
-            border: 1px solid #ffffff50;
-        }
-
-        .cta-button:hover {
-            background: #143048;
-            box-shadow: 0 15px 25px -6px #0f253a;
-            transform: scale(1.02);
-        }
-
-        /* социальные ссылки */
-        .social-links {
+        .social-mini {
             display: flex;
             justify-content: center;
             gap: 18px;
-            margin-top: 35px;
-            font-size: 1.5rem;
+            margin-top: 16px;
+            font-size: 1.8rem;
         }
 
-        .social-links a {
-            color: #1f3a57;
-            background: white;
-            width: 52px;
-            height: 52px;
+        .social-mini a {
+            text-decoration: none;
+            color: #2b4c73;
+            background: #e8f0fe;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            border: 1px solid #cdd9eb;
-            transition: 0.15s;
-            font-weight: 600;
+            transition: all 0.15s;
         }
 
-        .social-links a:hover {
-            background: #1e3b5c;
+        .social-mini a:hover {
+            background: #1f3a60;
             color: white;
-            border-color: #1e3b5c;
-            transform: translateY(-4px);
+            transform: scale(1.1);
         }
 
-        /* адаптивность */
-        @media (max-width: 750px) {
-            .business-card {
-                padding: 22px;
-            }
-            .media-grid {
+        .note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #4f6587;
+            margin-top: 8px;
+        }
+
+        /* Адаптация */
+        @media (max-width: 500px) {
+            .features {
                 grid-template-columns: 1fr;
-                gap: 18px;
+                gap: 15px;
             }
-            .guide-header h1 {
-                font-size: 2.2rem;
+            .name {
+                font-size: 2rem;
             }
-            .info-section {
-                flex-direction: column;
+            .footer {
+                height: 60px;
             }
-            .bio h2 {
-                font-size: 1.8rem;
-            }
-        }
-
-        @media (max-width: 450px) {
-            .highlights {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .contact-item {
+            .footer-hint {
                 font-size: 1rem;
+            }
+            .contact-popup {
+                left: 10px;
+                right: 10px;
+                padding: 18px;
+            }
+            .video-section h3 {
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="business-card">
-        <!-- Имя и специализация -->
-        <div class="guide-header">
-            <h1>Анна Смирнова</h1>
-            <div class="subtitle">🗺️ Гид по Санкт-Петербургу</div>
+    <div class="card">
+        <!-- Фото гида (мужчина Алексей) -->
+        <div class="photo">
+            <img src="df5f4df4aa1573e4c94b186c233fcce8.jpg" 
+                 alt="Алексей, гид и проводник"
+                 loading="lazy">
         </div>
 
-        <!-- Фото и видео -->
-        <div class="media-grid">
-            <div class="photo-frame">
-                <!-- реальное фото гида (случайная женщина с randomuser) -->
-                <img src="df5f4df4aa1573e4c94b186c233fcce8.jpg" 
-                     alt="Анна Смирнова, гид в Петербурге"
-                     loading="lazy">
+        <div class="info">
+            <div class="name">Алексей Бычков</div>
+            <div class="badge">Профессиональный гид | Проводник</div>
+
+            <!-- Четыре блока с раскрывающимся текстом -->
+            <div class="features" id="featuresAccordion">
+                <div class="feature-item" id="tour-block">
+                    <div class="feature-title">Туры</div>
+                    <div class="feature-text">Авторские маршруты по Карелии, Ленобласти и Золотому кольцу. Групповые и индивидуальные.</div>
+                    <div class="feature-expand">
+                        • Индивидуальные туры от 2 до 10 человек.<br>
+                        • Пешие и автобусные варианты.<br>
+                        • Посещение музеев и природных достопримечательностей.<br>
+                        • Длительность: от 3 часов до 7 дней.
+                    </div>
+                </div>
+                <div class="feature-item" id="hike-block">
+                    <div class="feature-title">Походы</div>
+                    <div class="feature-text">Пешие походы любой сложности: от однодневных до многодневных с палатками. Снаряжение предоставляю.</div>
+                    <div class="feature-expand">
+                        • Походы выходного дня, восхождения, сплавы.<br>
+                        • Снаряжение (палатки, спальники, коврики) — бесплатно.<br>
+                        • Требуется минимальная физическая подготовка.<br>
+                        • Маршруты подбираются под группу.
+                    </div>
+                </div>
+                <div class="feature-item" id="exp-block">
+                    <div class="feature-title">Опыт</div>
+                    <div class="feature-text">Более 12 лет в туризме, сотни довольных путешественников, сертификат инструктора и красный диплом географа.</div>
+                    <div class="feature-expand">
+                        • Работаю гидом с 2012 года.<br>
+                        • Провел более 500 экскурсий.<br>
+                        • Диплом географа МГУ, сертификат инструктора по туризму.<br>
+                        • Постоянно повышаю квалификацию.
+                    </div>
+                </div>
+                <div class="feature-item" id="about-block">
+                    <div class="feature-title">Обо мне</div>
+                    <div class="feature-text">Живу в лесу у озера, знаю каждый камень. Расскажу не только факты, но и настоящие легенды севера.</div>
+                    <div class="feature-expand">
+                        • Живу в Карелии, обожаю лес и озера.<br>
+                        • Могу рассказывать о деревьях, грибах и ягодах бесконечно.<br>
+                        • Со мной вы почувствуете себя настоящим исследователем.<br>
+                        • В свободное время фотографирую природу.
+                    </div>
+                </div>
             </div>
-            <div class="video-frame">
-                <!-- Промо-видео о Санкт-Петербурге (YouTube) -->
-                <iframe src="https://www.youtube.com/embed/1La4QzGeaaQ?si=2un27_nQTRM2wV9V" 
-                        title="Прогулка по Санкт-Петербургу"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                </iframe>
+
+            <!-- Видео-аккордеон (остался без изменений) -->
+            <div class="video-section">
+                <h3>Видео о путешествиях</h3>
+                <div class="accordion" id="accordion">
+                    <div class="accordion-item">
+                        <button class="accordion-header" data-target="video1">
+                            <span>Карелия: край озёр</span>
+                            <span class="arrow">▶</span>
+                        </button>
+                        <div class="accordion-content" id="video1">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/7u2yrMHr7JI?si=6w19cL1b6JwjM3dC" title="Карелия" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" data-target="video2">
+                            <span>Поход на Воттоваару</span>
+                            <span class="arrow">▶</span>
+                        </button>
+                        <div class="accordion-content" id="video2">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/0vqJgv3tI5s?si=NfP5h6xef0kCBNW5" title="Воттоваара" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <button class="accordion-header" data-target="video3">
+                            <span>Зимний поход в Лапландию</span>
+                            <span class="arrow">▶</span>
+                        </button>
+                        <div class="accordion-content" id="video3">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube.com/embed/6C1TpLaQpYc?si=zH5oz30nO77b2-nU" title="Лапландия" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Блок с информацией и контактами -->
-        <div class="info-section">
-            <!-- О гиде -->
-            <div class="bio">
-                <h2>Ваш проводник</h2>
-                <p>Привет! Я Анна — коренная петербурженка, историк и лицензированный гид с 10-летним стажем. Влюблена в город на Неве и знаю все его тайные дворики, парадные и легенды.</p>
-                <ul class="highlights">
-                    <li><span></span> 10 лет опыта</li>
-                    <li><span></span> Искусствовед</li>
-                    <li><span></span> Русский, English</li>
-                    <li><span></span> Индивидуально / группы</li>
-                </ul>
-                <p>Со мной вы увидите не только Эрмитаж и Петергоф, но и настоящий, живой Петербург с его атмосферой, вкусной историей и нетуристическими маршрутами.</p>
+        <!-- Футер с контактами -->
+        <div class="footer">
+            <div class="footer-hint">
+                <span class="arrow">↑</span> КОНТАКТЫ <span class="arrow">↑</span>
             </div>
-
-            <!-- Контактная информация -->
-            <div class="contacts">
-                <h3>Связаться</h3>
-
-                <div class="contact-item">
-                    <span class="contact-icon"></span>
-                    <span class="contact-detail">+7 (911) 234-56-78</span>
+            <div class="contact-popup">
+                <div class="contact-row">
+                    <span class="contact-icon">&#9742;</span>
+                    <span class="contact-detail">+7 (921) 123-45-67</span>
                 </div>
-                <div class="contact-item">
-                    <span class="contact-icon"></span>
-                    <span class="contact-detail">anna.spb@guide.me</span>
+                <div class="contact-row">
+                    <span class="contact-icon">&#9993;</span>
+                    <span class="contact-detail">petr@nordguide.ru</span>
                 </div>
-                <div class="contact-item">
-                    <span class="contact-icon"></span>
-                    <span class="contact-detail">Санкт-Петербург, центр</span>
+                <div class="contact-row">
+                    <span class="contact-icon">⌖</span>
+                    <span class="contact-detail">Петрозаводск / онлайн</span>
                 </div>
-
-                <!-- Кнопка-действие (заказ экскурсии) -->
-                <a href="#" class="cta-button"> Заказать экскурсию</a>
-
-                <!-- Социальные сети (эмодзи как иконки) -->
-                <div class="social-links">
-                    <a href="#" aria-label="Instagram"></a>
-                    <a href="#" aria-label="Telegram"></a>
-                    <a href="#" aria-label="WhatsApp"></a>
-                    <a href="#" aria-label="Vkontakte"></a>
-                </div>
-                <p style="text-align: center; margin-top: 15px; color: #435f7d; font-size: 0.9rem;">@anna_guide_spb</p>
+                
+                <div class="note">@petr_woods (все мессенджеры)</div>
             </div>
-        </div>
-
-        <!-- маленькая дополнительная информация (режим работы) -->
-        <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 0.95rem; color: #3f5270; border-top: 2px dashed rgba(79, 122, 166, 0.3); padding-top: 20px; flex-wrap: wrap;">
-            <span>Гибкий график: ежедневно 10:00–20:00</span>
-            <span>Принимаю рубли, евро, карты</span>
-            <span>До 8 человек в группе</span>
         </div>
     </div>
+
+    <script>
+        // Аккордеон для видео (как и раньше)
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const content = document.getElementById(targetId);
+                const isActive = this.classList.contains('active');
+
+                // Закрываем все видео
+                document.querySelectorAll('.accordion-header').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('show'));
+
+                if (!isActive) {
+                    this.classList.add('active');
+                    content.classList.add('show');
+                }
+            });
+        });
+
+        // Аккордеон для блоков "Туры", "Походы", "Опыт", "Обо мне"
+const featureItems = document.querySelectorAll('.feature-item');
+featureItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const isExpanded = item.classList.contains('expanded');
+        // Закрываем все другие блоки
+        featureItems.forEach(fi => fi.classList.remove('expanded'));
+        // Если текущий не был открыт — открываем его
+        if (!isExpanded) {
+            item.classList.add('expanded');
+        }
+    });
+});
+    </script>
+    <script>
+    // Для мобильных: клик по футеру открывает/закрывает контакты
+    const footer = document.querySelector('.footer');
+    const popup = document.querySelector('.contact-popup');
+
+    footer.addEventListener('click', (e) => {
+        // Не закрываем, если клик внутри самого popup (чтобы можно было скопировать телефон)
+        if (e.target.closest('.contact-popup')) return;
+        popup.classList.toggle('show');
+    });
+
+    // Закрыть при клике вне футера (по желанию)
+    document.addEventListener('click', (e) => {
+        if (!footer.contains(e.target)) {
+            popup.classList.remove('show');
+        }
+    });
+</script>
 </body>
 </html>
